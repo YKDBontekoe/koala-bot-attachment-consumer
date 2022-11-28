@@ -20,6 +20,14 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
+             #substitute production appsettings entries to appsettings json file
+            - uses: microsoft/variable-substitution@v1
+              name: App Settings Variable Substitution
+              with:
+                files: 'appsettings.json'
+              env:
+                ServiceBus.ConnectionString: ${{ secrets.SERVICE_BUS_CONNECTION_STRING }}
+                BlobStorage.ConnectionString: ${{ secrets.BLOB_STORAGE_CONNECTION_STRING }}
             - uses: azure/login@v1.4.3
               name: Azure login
               with:
